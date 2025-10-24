@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNA Project: Network Growth Model</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Keyframe for the lightning effect */
+        @keyframes lightningBorder {
+            0% { border-color: transparent; }
+            10% { border-color: rgba(144, 238, 144, 0.4); box-shadow: 0 0 15px rgba(144, 238, 144, 0.6); } /* Light Green */
+            20% { border-color: transparent; }
+            30% { border-color: rgba(173, 216, 230, 0.4); box-shadow: 0 0 15px rgba(173, 216, 230, 0.6); } /* Light Blue */
+            40% { border-color: transparent; }
+            50% { border-color: rgba(255, 255, 0, 0.4); box-shadow: 0 0 15px rgba(255, 255, 0, 0.6); } /* Yellow */
+            60% { border-color: transparent; }
+            70% { border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); } /* White */
+            80% { border-color: transparent; }
+            100% { border-color: transparent; }
+        }
+
+        /* General Body Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a2e; /* Deep dark blue */
+            color: #e0e0e0; /* Light gray text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden; /* Prevent scroll for body */
+        }
+        
+        /* Main Container for the Content */
+        .container {
+            background-color: rgba(26, 26, 46, 0.8); /* Slightly transparent dark blue */
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); /* Cyan glow */
+            max-width: 650px;
+            text-align: center;
+            border: 2px solid transparent; /* Initial transparent border for animation */
+            animation: lightningBorder 8s infinite ease-in-out; /* Apply lightning animation */
+            position: relative;
+            z-index: 1; /* Ensure it's above potential background effects */
+        }
+
+        /* Optional: Add a subtle background grid/pattern for more depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        /* Header Information */
+        .header-info h1 {
+            font-family: 'Orbitron', sans-serif; /* Sci-fi looking font */
+            color: #00ffff; /* Electric cyan for the title */
+            font-weight: 700;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .header-info p {
+            font-size: 1.2em;
+            color: #b0b0b0; /* Lighter gray for sub-text */
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+        
+        .header-info span {
+            font-weight: 700;
+            color: #ffffff; /* White for name/roll number */
+        }
+
+        /* Separator Line */
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #444;
+            margin: 35px 0;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); /* Subtle glow */
+        }
+
+        /* Link Buttons Container */
+        .link-container {
+            display: flex;
+            justify-content: center; /* Center buttons */
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        /* Link Button Styling */
+        .link-container a {
+            flex-basis: 45%; /* Give buttons a defined width */
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff); /* Gradient blue */
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: all 0.4s ease; /* Smooth hover transition */
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Sparkle effect on button hover */
+        .link-container a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.7s;
+            transform: skewX(-20deg);
+        }
+        
+        .link-container a:hover::before {
+            left: 100%;
+        }
+
+        /* Link Button Hover Effect */
+        .link-container a:hover {
+            background: linear-gradient(135deg, #0072ff, #00c6ff); /* Inverted gradient on hover */
+            transform: translateY(-5px) scale(1.02); /* More pronounced lift and slight scale */
+            box-shadow: 0 10px 25px rgba(0, 114, 255, 0.6); /* Stronger glow */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 40px;
+                max-width: 90%;
+            }
+            .header-info h1 {
+                font-size: 2em;
+            }
+            .header-info p {
+                font-size: 1em;
+            }
+            .link-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .link-container a {
+                flex-basis: auto; /* Allow buttons to take full width */
+                font-size: 1em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-info">
+            <h1>NETWORK GROWTH MODEL</h1>
+            <p style="margin-top: 25px;">
+                <span style="font-weight: 700;">RITIK THAKUR</span> <br>
+                Roll No: <span>205124079</span>
+            </p>
+        </div>
+
+        <hr>
+
+        <div class="link-container">
+            <a href="https://docs.google.com/presentation/d/17lIOlc69JEZEKzsQTcZUilAAfEBj6ztyAxwLjLIdylM/edit?slide=id.g3950a5a4890_2_75#slide=id.g3950a5a4890_2_75" target="_blank">
+                📊 View Presentation
+            </a>
+
+            <a href="https://colab.research.google.com/drive/1_RKRROoYjsdnzIqA2LgYZEnyzZDzT8aN?usp=sharing" target="_blank">
+                💻 View Code
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
